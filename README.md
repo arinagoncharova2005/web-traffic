@@ -7,6 +7,7 @@ The website that represent packets sent from different countries.
 1. Run docker
 
 ```
+cd web-traffic
 docker-compose up
 ```
 
