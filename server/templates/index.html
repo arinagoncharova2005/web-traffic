@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IP Traffic</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
+   
+    <!-- camera control -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+
+</head>
+<body>
+    <div class="stars-background" id="background-canvas"></div>
+    
+    <div id="dashboard">
+        <!-- left statistics block -->
+        
+        <div id="stats-panel">
+            <h1 class="panel-title">Web Traffic</h1>
+
+            <!-- total number pf packets -->
+            <div class="main-stat">
+                <div class="main-stat-value" id="total-packets">0</div>
+                <div class="main-stat-label">Number of Packets</div>
+            </div>
+            
+            <!-- suspicious packets number -->
+            <div class="suspicious-stats">
+                <div class="stat-row">
+                    <div class="stat-item">
+                        <div class="stat-details">
+                            <div class="stat-value" id="suspicious-packets">0</div>
+                            <div class="stat-label">Suspicious Packets</div>
+                        </div>
+                        <div class="stat-percentage" id="suspicious-percentage">0%</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- pie chart with countries -->
+            <div class="stats-box">
+                <h2>Country Distribution</h2>
+                <div class="chart-container">
+                    <canvas id="country-chart"></canvas>
+                </div>
+            </div>
+            
+            <!-- table with packets -->
+            <div class="stats-box">
+                <h2>Packet Info</h2>
+                <div class="table-controls">
+                    <div class="search-box">
+                        <input type="text" id="table-search" placeholder="Search...">
+                    </div>
+                    <div class="filter-options">
+                        <select id="status-filter">
+                            <option value="all">All Packets</option>
+                            <option value="suspicious">Suspicious</option>
+                            <option value="normal">Normal</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="table-container">
+                    <table id="packets-table">
+                        <thead>
+                            <tr>
+                                <th data-sort="ip">IP Address</th>
+                                <th data-sort="country">Country</th>
+                                <th data-sort="time">Time</th>
+                            </tr>
+                        </thead>
+                        <tbody id="packets-body">
+                            <!-- table data -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <!-- block with globe(Earth) -->
+        <div id="globe-panel">
+            <div id="visualization"></div>
+        </div>
+    </div>
+    <!-- tooltip -->
+    <div id="globe-tooltip" style="display: none; position: absolute; background-color: rgba(4, 5, 46, 0.85); color: #f8edeb; padding: 10px; border-radius: 4px; font-size: 12px; pointer-events: none; z-index: 1000; box-shadow: 0 4px 8px rgba(0,0,0,0.3); max-width: 250px;"></div>
+    
+    <!-- Chart.js for pie chart -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+    
+    <!-- adding scripts -->
+    <script src="{{ url_for('static', filename='js/globe.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+    <!-- scripts to get the country based on the latitude and longitude -->
+<script src="https://cdn.jsdelivr.net/npm/@turf/turf@6/turf.min.js"></script>
+<script src="{{ url_for('static', filename='js/countries.min.geojson') }}" type="application/json" id="countries-geojson"></script>
+</body>
+</html>
