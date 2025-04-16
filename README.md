@@ -3,8 +3,13 @@
 The website that represent packets sent from different countries.
 
 ### How to run?
+1. Clone the repository
 
-1. Run docker
+```
+git clone https://github.com/arinagoncharova2005/web-traffic.git
+```
+
+2. Run docker
 
 ```
 cd web-traffic
